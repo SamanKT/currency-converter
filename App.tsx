@@ -9,11 +9,11 @@ import DropDownPicker from "react-native-dropdown-picker";
 import { useEffect, useState } from "react";
 import { TextInput } from "react-native";
 import LineWithContent from "./Components/LineWithContent";
-import { API_KEY, COUNTRY_CURRENCY, SAMPLE_DATA } from "./Constants";
+import { API_KEY, COUNTRY_CURRENCY, SAMPLE_DATA } from "./Common/Constants";
 import { Button } from "react-native-paper";
-import Background from "./Background";
+import Background from "./Components/Background";
 import currencyapi from "@everapi/currencyapi-js";
-import { Chart } from "./Chart";
+import { Chart } from "./Components/Chart";
 
 const data = [35, 50, 40];
 
