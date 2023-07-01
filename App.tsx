@@ -1,9 +1,10 @@
 import { Alert, Image, Platform, SafeAreaView, StatusBar } from "react-native";
 import { ScrollView } from "react-native";
 import { StyleSheet, Text, View } from "react-native";
-import { BarChart } from "react-native-gifted-charts";
+
 import { useFonts, Inter_900Black } from "@expo-google-fonts/inter";
 import { SvgUri } from "react-native-svg";
+
 import DropDownPicker from "react-native-dropdown-picker";
 import { useEffect, useState } from "react";
 import { TextInput } from "react-native";
@@ -12,6 +13,9 @@ import { API_KEY, COUNTRY_CURRENCY, SAMPLE_DATA } from "./Constants";
 import { Button } from "react-native-paper";
 import Background from "./Background";
 import currencyapi from "@everapi/currencyapi-js";
+import { Chart } from "./Chart";
+
+const data = [35, 50, 40];
 
 const cardHeight: number = 500;
 const contentHeight: number = 200;
@@ -54,9 +58,7 @@ export default function App() {
   const [valueOut, setValueOut] = useState(items[232].value);
   const [amountIn, setAmountIn] = useState<string>("0");
   const [amountOut, setAmountOut] = useState<string>((0.0).toFixed(2));
-  const [chartData, setChartData] = useState<
-    { value: number; label: string }[]
-  >([]);
+  const [chartData, setChartData] = useState<number[]>([]);
 
   const handleInput = (text: string) => {
     const data = latest?.data;
@@ -112,10 +114,7 @@ export default function App() {
       const currValue =
         response.data[currencyOut as keyof typeof response.data].value;
 
-      setChartData((chartData) => [
-        ...chartData,
-        { value: currValue, label: date.slice(5, 10) },
-      ]);
+      setChartData((chartData) => [...chartData, currValue as number]);
     });
   };
 
@@ -253,19 +252,7 @@ export default function App() {
               Conversion
             </Text>
 
-            <BarChart
-              data={chartData}
-              isAnimated={true}
-              barWidth={20}
-              frontColor="#106378"
-              width={230}
-              barBorderRadius={5}
-              cappedBars={true}
-              autoShiftLabels={true}
-              initialSpacing={40}
-              spacing={50}
-            />
-
+            <Chart data={chartData} />
             <Button
               mode="contained"
               buttonColor="dodgerblue"
